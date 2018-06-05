@@ -1,0 +1,2 @@
+# ModelDelegate
+在QTableView中使用各种自定义委托 包括ComboBox、DoubleSpinBox、CheckBox以及设置列只读

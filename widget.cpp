@@ -27,10 +27,10 @@ Widget::Widget(QWidget *parent) :
     hlayout->addWidget(btn);
 
     QStringList items;
-    items.append("农民");
-    items.append("工人");
-    items.append("教师");
-    items.append("音乐1");
+    items.append("音乐");
+    items.append("美术");
+    items.append("体育");
+    items.append("表演");
     TableView *table1 = new TableView(items);
     m_pTabWidget->addTab(table1,tr("tab1"));
 

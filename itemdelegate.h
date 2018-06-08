@@ -81,4 +81,19 @@ private:
     int column;         //设置复选框的列
 };
 
+/*
+ * calendar
+ */
+class DateDelegate : public QItemDelegate
+{
+    Q_OBJECT
+public:
+    DateDelegate(QObject *parent = 0);
+
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex	&index) const;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const  QModelIndex &index) const;
+};
+
 #endif // ITEMDELEGATE_H

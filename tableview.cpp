@@ -8,16 +8,17 @@ TableView::TableView(QStringList items)
 {
     resize(500,300);
 
-    model = new QStandardItemModel(4,4);
+    model = new QStandardItemModel(4,5);
     setModel(model);
 
     model->setHeaderData(0,Qt::Horizontal,QObject::tr("姓名"));
     model->setHeaderData(1,Qt::Horizontal,QObject::tr("生日"));
     model->setHeaderData(2,Qt::Horizontal,QObject::tr("职业"));
     model->setHeaderData(3,Qt::Horizontal,QObject::tr("收入"));
+    model->setHeaderData(4,Qt::Horizontal,QObject::tr("日期"));
 
 #if 1
-    for(int col = 0; col < 4; ++col)
+    for(int col = 0; col < 5; ++col)
     {
         if(col == 0)
         {
@@ -26,9 +27,9 @@ TableView::TableView(QStringList items)
         }
         if(col == 1)
         {
-            ComboDelegate *combo = new ComboDelegate;
-            combo->setItems(items);
-            setItemDelegateForColumn(col,combo);
+            CheckBoxDelegate *checkBox = new CheckBoxDelegate;
+            checkBox->setColumn(1);
+            setItemDelegateForColumn(col,checkBox);
         }
         if(col == 2)
         {
@@ -37,14 +38,21 @@ TableView::TableView(QStringList items)
         }
         if(col == 3)
         {
-            CheckBoxDelegate *checkBox = new CheckBoxDelegate;
-            checkBox->setColumn(3);
-            setItemDelegateForColumn(col,checkBox);
+            ComboDelegate *combo = new ComboDelegate;
+            combo->setItems(items);
+            setItemDelegateForColumn(col,combo);
+        }
+        if(col == 4){
+            DateDelegate *date = new DateDelegate;
+            setItemDelegateForColumn(col, date);
         }
         for(int row = 0; row < 4; ++row)
         {
             QModelIndex index = model->index(row, col, QModelIndex());
-            model->setData(index, QString("%1%2").arg(row).arg(col));
+            if(col == 1)
+                model->setData(index, 0);
+            else
+                model->setData(index, QString("%1%2").arg(row).arg(col));
         }
     }
 #else

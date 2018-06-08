@@ -1,6 +1,7 @@
 #include "itemdelegate.h"
 #include <QComboBox>
 #include <QDoubleSpinBox>
+#include <QDateTimeEdit>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
@@ -170,4 +171,36 @@ bool CheckBoxDelegate::editorEvent(QEvent *event,
     }else{
         return QStyledItemDelegate::editorEvent(event, model, option, index);
     }
+}
+
+DateDelegate::DateDelegate(QObject *parent) :
+    QItemDelegate(parent)
+{
+}
+
+QWidget *DateDelegate::createEditor(QWidget *parent,const QStyleOptionViewItem &/*option*/,const QModelIndex &/*index*/) const
+{
+    QDateEdit *editor = new QDateEdit(parent);
+    editor->setCalendarPopup(true);
+    return editor;
+}
+
+void DateDelegate::setEditorData(QWidget *editor,const QModelIndex &index) const
+{
+    QString str =index.model()->data(index).toString();
+
+    QDateEdit *pDate = static_cast<QDateEdit*>(editor);
+    pDate->setDate(QDate::fromString(str,"yyyy/M/d"));
+}
+
+void DateDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+    QDateEdit *pDate = static_cast<QDateEdit*>(editor);
+    QString str = pDate->dateTime().toString("yyyy/M/d");
+    model->setData(index,str);
+}
+
+void DateDelegate::updateEditorGeometry(QWidget *editor,const QStyleOptionViewItem &option, const QModelIndex &/*index*/) const
+{
+    editor->setGeometry(option.rect);
 }

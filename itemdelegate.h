@@ -38,7 +38,7 @@ public:
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const  QModelIndex &index) const;
 
 private:
-    QStringList m_sItemList;
+    QStringList m_sItemList;    //下拉框列表项
 };
 
 /*
@@ -58,8 +58,8 @@ public:
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const  QModelIndex &index) const;
 
 private:
-    double minValue;
-    double maxValue;
+    double minValue;        //最小值
+    double maxValue;        //最大值
 };
 
 /*
@@ -94,6 +94,43 @@ public:
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const  QModelIndex &index) const;
+};
+
+/*
+ * TimeEdit
+ */
+class TimeDelegate : public QItemDelegate
+{
+    Q_OBJECT
+public:
+    TimeDelegate(QObject *parent = 0);
+
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex	&index) const;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const  QModelIndex &index) const;
+};
+
+/*
+ * DoubleLineEdit
+ */
+class DoubleLineEditDelegate : public QItemDelegate
+{
+    Q_OBJECT
+public:
+    DoubleLineEditDelegate(QObject *parent = 0);
+
+    void setRange(double bottom, double top, int decimals = 0);
+
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex	&index) const;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const  QModelIndex &index) const;
+
+private:
+    int min;        //最小值
+    int max;        //最大值
+    int dec;        //小数位数
 };
 
 #endif // ITEMDELEGATE_H

@@ -4,11 +4,13 @@
 
 #include "itemdelegate.h"
 
+#define MAXCOL  6
+
 TableView::TableView(QStringList items)
 {
-    resize(500,300);
+    resize(600,300);
 
-    model = new QStandardItemModel(4,5);
+    model = new QStandardItemModel(4,MAXCOL);
     setModel(model);
 
     model->setHeaderData(0,Qt::Horizontal,QObject::tr("姓名"));
@@ -16,9 +18,10 @@ TableView::TableView(QStringList items)
     model->setHeaderData(2,Qt::Horizontal,QObject::tr("职业"));
     model->setHeaderData(3,Qt::Horizontal,QObject::tr("收入"));
     model->setHeaderData(4,Qt::Horizontal,QObject::tr("日期"));
+    model->setHeaderData(5,Qt::Horizontal,QObject::tr("时间"));
 
 #if 1
-    for(int col = 0; col < 5; ++col)
+    for(int col = 0; col < MAXCOL; ++col)
     {
         if(col == 0)
         {
@@ -27,9 +30,9 @@ TableView::TableView(QStringList items)
         }
         if(col == 1)
         {
-            CheckBoxDelegate *checkBox = new CheckBoxDelegate;
-            checkBox->setColumn(1);
-            setItemDelegateForColumn(col,checkBox);
+            DoubleLineEditDelegate *lineEdit = new DoubleLineEditDelegate;
+            lineEdit->setRange(0, 999, 6);
+            setItemDelegateForColumn(col, lineEdit);
         }
         if(col == 2)
         {
@@ -45,6 +48,10 @@ TableView::TableView(QStringList items)
         if(col == 4){
             DateDelegate *date = new DateDelegate;
             setItemDelegateForColumn(col, date);
+        }
+        if(col == 5){
+            TimeDelegate *time = new TimeDelegate;
+            setItemDelegateForColumn(col, time);
         }
         for(int row = 0; row < 4; ++row)
         {
